@@ -13,6 +13,17 @@ contract ERC721 {
 
     mapping(address => uint) private _tokensOwnedCount;
 
+    function balanceOf(address _owner) public view returns(uint256) {
+        require(_owner != address(0), "Owner does not exist.");
+        return _tokensOwnedCount[_owner];
+    }
+
+    function ownerOf(uint256 _tokenId) external view returns (address) {
+        address owner = _tokenOwner[_tokenId];
+        require(owner != address(0), "Owner does not exist");
+        return owner;
+    }
+
     function _mint(address to, uint tokenId) internal {
         require(to != address(0), 'ERC721: Minting to a zero address!'); // require a valid address (nonzero)
         require(!_exists(tokenId), 'ERC721: Token already minted!'); // require that the token has not been minted yet
